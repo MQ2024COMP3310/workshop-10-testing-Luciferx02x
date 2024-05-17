@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "test" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -26,10 +26,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install bandit -r . -x test_*.py
+        pip install bandit -r . -x test_*.py pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with bandit -r. -x test_*.py
-      continue-on-error: true
+    - name: Lint with bandit
       run: |
         # stop the build if there are Python syntax errors or undefined names
         bandit -r . -x test_*.py
